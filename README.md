@@ -6,6 +6,15 @@ Docker project for IIEC Dokcer training By Vimal Daga
 
 [**Docker**](https://www.docker.com/) is a set of platform as a service products that uses OS-level virtualization to deliver software in packages called containers. Containers are isolated from one another and bundle their own software, libraries and configuration files; they can communicate with each other through well-defined channels.
 
+I used Docker as a Application Infrastructure.
+It provides a complete isolated and more secure environment.
+
+**Concepts** used are :
+1. Docker Volume
+2. Docker Container
+3. Docker Network
+4. DNS for load balancing( Round Robin)
+
 In this project I deployed a container with [**nextcloud**](https://hub.docker.com/_/nextcloud) server which gives services of personal cloud. A safe home for all your data. Access & share your files, calendars, contacts, mail & more from any device, on your terms.
   " https://hub.docker.com/_/nextcloud " This is the link for docker hub 
 
