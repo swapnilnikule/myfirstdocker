@@ -1,0 +1,65 @@
+version: '2'
+
+
+services:
+  sqlos:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    volumes:
+      - cloudsql:/var/lib/mysql
+    environment:
+      - MYSQL_USER=swapnil
+      - MYSQL_ROOT_PASSWORD=redhat
+      - MYSQL_PASSWORD=swapdb
+      - MYSQL_DATABASE=nextcloud
+    networks:
+      - nextcloud_network
+
+  app1:
+    image: nextcloud
+    ports:
+      - 8080:80
+    links:
+      - sqlos
+    volumes:
+      - nextcloud_storage:/var/www/html
+    environment:
+      - MYSQL_USER=swapnil
+      - MYSQL_HOST=sqlos
+      - MYSQL_PASSWORD=swapdb
+      - MYSQL_DATABASE=nextcloud
+    restart: always
+    networks:
+      nextcloud_network:
+        aliases:
+          - nextcloud  
+
+  app2:
+    image: nextcloud
+    ports:
+      - 8081:80
+    links:
+      - sqlos
+    volumes:
+      - nextcloud_storage:/var/www/html
+    environment:
+      - MYSQL_USER=swapnil
+      - MYSQL_HOST=sqlos
+      - MYSQL_PASSWORD=swapdb
+      - MYSQL_DATABASE=nextcloud
+    restart: always
+    networks:
+      nextcloud_network:
+        aliases:
+          - nextcloud 
+
+
+volumes:
+  nextcloud_storage:
+  cloudsql:
+
+networks:
+  nextcloud_network:
+    driver: bridge
+       

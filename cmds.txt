@@ -1,0 +1,32 @@
+
+#create volumes
+
+docker volume create cloudsql
+docker volume create nextcloud_storage
+
+#create a network
+
+docker network create --driver bridge nextcloud
+
+#run database conatainer 
+
+docker run -d -it -e MYSQL_ROOT_PASSWORD=redhat  -e MYSQL_USER=swapnil -e MYSQL_PASSWORD=swapdb  -e MYSQL_DATABASE=mydata -v cloudsql:/var/lib/mysql --network nextcloud --name sqlos mysql
+
+#look for ip of any container
+
+docker inspect <id> | grep IP
+
+#download mqsql client to access database
+
+yum install mysql
+
+#access database
+
+mysql -f -h 172.17.0.2 -u swapnil -pswapdb
+
+#run nextcloud container
+
+docker run -it -e MYSQL_DATABASE=mydata -e MYSQL_USER=swapnil -e MYSQL_PASSWORD=swapdb -e MYSQL_HOST=sqlos -v nextcloud_storage:/var/www/html --link sqlos --name nextcloudos --network nextcloud -p 8080:80 -d nextcloud
+
+
+
